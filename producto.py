@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 
 class Producto():
     ID_Producto =0,
@@ -42,3 +43,5 @@ class Producto():
     def setiD_Receta(self,iD_Receta):
         self.iD_Receta = iD_Receta   
     
+=======
+>>>>>>> aee278d78f007e7c64d884f77300aa502bf13518
