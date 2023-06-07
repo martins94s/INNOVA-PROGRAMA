@@ -1,15 +1,15 @@
 CREATE DATABASE big_BREADD;
 USE big_BREADD;
 CREATE TABLE PRODUCCION(
-fecha date NOT NULL,
+ fecha date NOT NULL,
  id_produccion int primary key auto_increment,
  id_producto int not null,
  cantidad int not null);
  
 CREATE TABLE PRODUCTO(
 id_producto int not null,
- nombre varchar(30), 
- descripcion varchar(300),
+ nombre_Producto varchar(30), 
+Unidad_de_medida varchar(300), 
  precio decimal(5,5)not null);
  
 CREATE TABLE RECETA(
@@ -20,8 +20,8 @@ receta varchar(300),
  
 CREATE TABLE INSUMOS(
 id_insumo int primary key auto_increment,
-nombre varchar (50) not null,
-descripcion varchar(300));
+nombre_Producto varchar (50) not null,
+Unidad_de_medida varchar(300));
  
  insert into producto(producto,receta,precio)
  values
