@@ -9,8 +9,8 @@ class conectarBD:
         self.database = database
         self.auth_plugin = auth_plugin
         self.connection = None
-
     def connect(self):
+
         try:
             self.conexion = mysql.connector.connect(
                 host=self.host,
