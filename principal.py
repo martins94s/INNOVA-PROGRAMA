@@ -8,7 +8,6 @@ import Controlador_receta
 while True:
 
     print("")
-    
     print("")
     print("***********************************************************")
     print("******* Bienvenidos a la Base de Datos de Big Bread *******")
