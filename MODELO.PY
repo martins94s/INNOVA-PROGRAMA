@@ -1,6 +1,6 @@
 import mysql.connector
 
-class conectarBD:
+class conectar:
     def __init__(self, host, user, password, port, database, auth_plugin='mysql_native_password'):
         self.host = host
         self.user = user
@@ -9,10 +9,10 @@ class conectarBD:
         self.database = database
         self.auth_plugin = auth_plugin
         self.connection = None
-    def connect(self):
 
+    def connect(self):
         try:
-            self.conexion = mysql.connector.connect(
+            self.connection = mysql.connector.connect(
                 host=self.host,
                 user=self.user,
                 password=self.password,
@@ -25,39 +25,38 @@ class conectarBD:
             print("Error al conectar a la base de datos:", error)
 
     def close(self):
-        if self.conexion:
-            self.conexion.close()
+        if self.connection:
+            self.connection.close()
             print("Conexión cerrada.")
 
 
-db_connection = conectarBD(
+conectar= conectar(
     host="localhost",
     user="root",
     password="",
     port="3308",
     database="big_bread"
 )
-db_connection.connect()
+conectar.connect()
 
 
-db_connection.close()
-
+conectar.close()
 
 def ListarProductos(self):
-        if self.conexion.is_connected():
+        if self.connection.is_connected():
             try:
-                cursor = self.conexion.cursor()
+                cursor = self.connection.cursor()
                 senteciaSQL = "SELECT * FROM Productos"
                 cursor.execute(senteciaSQL)
                 resultados = cursor.fetchall()
-                self.conexion.close()
+                self.connection.close()
                 return resultados
             
             except mysql.connector.Error as descripcionError:
                 print("¡No se conectó!",descripcionError)
     
 def InsertarProducto(self,producto):
-        if self.conexion.is_connected():
+        if self.connection.is_connected():
             try:
                 cursor = self.conexion.cursor()
                 sentenciaSQL = "INSERT into productos values(null,%s,%s,%s,%s,null)"
@@ -70,8 +69,8 @@ def InsertarProducto(self,producto):
 
                 cursor.execute(sentenciaSQL,data)
 
-                self.conexion.commit()
-                self.conexion.close()
+                self.connection.commit()
+                self.connection.close()
                 print("Producto insertado correctamente")
 
             except mysql.connector.Error as descripcionError:
