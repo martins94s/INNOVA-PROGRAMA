@@ -1,7 +1,7 @@
-import Controlador_prod
-import Controlador_insumo
-import Controlador_Produccion
-import Controlador_receta
+import controlador_prod
+import controlador_insumo
+import controlador_produccion
+import controlador_receta
 
 
 
@@ -34,11 +34,11 @@ while True:
         print("3 - Modificar Producto")
         opcion_Producto = int(input("Ingrese su opcion de Producto: "))
         if opcion_Producto == 1:
-            Controlador_prod.Insertar_Producto() 
+            controlador_prod.Insertar_Producto() 
         elif opcion_Producto == 2:
-            Controlador_prod.BorrarProducto()
+            controlador_prod.BorrarProducto()
         elif opcion_Producto == 3:
-            Controlador_prod.ActualizarProducto()
+            controlador_prod.ActualizarProducto()
         else:
             print("gracias por la consulta")
 
@@ -52,11 +52,11 @@ while True:
         print("3 - Modificar Insumo")
         opcion_Insumo = int(input("Ingrese su opcion de Insumo: "))
         if opcion_Insumo == 1:
-            Controlador_insumo.Insertar_Insumo()
+            controlador_insumo.Insertar_Insumo()
         elif opcion_Insumo == 2:
-            Controlador_insumo.Borrar_Insumo()
+            controlador_insumo.Borrar_Insumo()
         elif opcion_Insumo == 3:
-            Controlador_insumo.Actualizar_Insumo()
+            controlador_insumo.Actualizar_Insumo()
         else:
             print("gracias por la consulta")
 
@@ -69,11 +69,11 @@ while True:
         print("3 - Modificar Produccion")
         opcion_Insumo = int(input("Ingrese su opcion de Produccion: "))
         if opcion_Insumo == 1:
-            Controlador_Produccion.Insertar_Produccion()
+            controlador_produccion.Insertar_Produccion()
         elif opcion_Insumo == 2:
-            Controlador_Produccion.Borrar_Produccion()
+            controlador_produccion.Borrar_Produccion()
         elif opcion_Insumo == 3:
-            Controlador_Produccion.Actualizar_Produccion()
+            controlador_produccion.Actualizar_Produccion()
         else:
             print("gracias por la consulta")
 
@@ -86,22 +86,22 @@ while True:
         print("3 - Modificar Receta")
         opcion_Insumo = int(input("Ingrese su opcion de Receta: "))
         if opcion_Insumo == 1:
-            Controlador_receta.Insertar_Receta()
+            controlador_receta.Insertar_Receta()
         elif opcion_Insumo == 2:
-            Controlador_receta.BorrarReceta()
+            controlador_receta.BorrarReceta()
         elif opcion_Insumo == 3:
-            Controlador_receta.Actualizar_Receta()
+            controlador_receta.Actualizar_Receta()
         else:
             print("gracias por la consulta")
 
     elif opcion == 5:
-        Controlador_prod.ListarProductos() #funciona
+        controlador_prod.ListarProductos() #funciona
 
     elif opcion == 6:
-        Controlador_Produccion.Listar_Produccion()
+        controlador_produccion.Listar_Produccion()
 
     elif opcion == 7:
-        Controlador_insumo.Listar_Insumo()
+        controlador_insumo.Listar_Insumo()
 
     elif opcion == 8:
             break
