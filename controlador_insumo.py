@@ -32,7 +32,7 @@ def Insertar_Insumo(): #funciona
 def Actualizar_Insumo(): #funciona
     con = Modelo.Conectar()
 
-    con.UpdateInsumo()s
+    con.UpdateInsumo()
 
 
 
