@@ -6,7 +6,7 @@ def Borrar_Produccion(): #FUNCIONA
     condicion = (input("el numero de registro de produccion a eliminar: "))
     com.DeleteProduccion(condicion)
 
-def Listar_Produccion(): #FUNCIONA
+def ListarProduccion(): #FUNCIONA
     
     com = Modelo.Conectar()
 
@@ -33,7 +33,7 @@ def Insertar_Produccion(): #FUNCIONA
     cantidad_pedida = int(input("Ingrese la cantidad pedida: "))
     unidad = str(input("Ingrese unidad del producto: "))
 
-    produccion = Modelo.Produccion(iD_produccion,fecha,num_pedido,prod_pedido,cantidad_pedida,unidad)
+    produccion = Modelo.Produccion(0,fecha,num_pedido,prod_pedido,cantidad_pedida,unidad)
 
     Con = Modelo.Conectar()
     Con.InsertarProduccion(produccion)

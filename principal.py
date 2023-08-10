@@ -25,6 +25,7 @@ while True:
     print("7 - LISTADO DE INSUMOS DIARIO")
     print("8 - SALIR")
     opcion =int(input("Ingrese su opcion: "))
+    
     if opcion == 1: # PRODUCTO
         print("")
         print("Las Opciones de Producto son: ")
@@ -34,7 +35,7 @@ while True:
         print("3 - Modificar Producto")
         opcion_Producto = int(input("Ingrese su opcion de Producto: "))
         if opcion_Producto == 1:
-            controlador_prod.Insertar_Producto() 
+            controlador_prod.InsertarProducto() 
         elif opcion_Producto == 2:
             controlador_prod.BorrarProducto()
         elif opcion_Producto == 3:
@@ -95,13 +96,13 @@ while True:
             print("gracias por la consulta")
 
     elif opcion == 5:
-        controlador_prod.ListarProductos() #funciona
+        controlador_prod.ListarProducto() #funciona
 
     elif opcion == 6:
-        controlador_produccion.Listar_Produccion()
+        controlador_produccion.ListarProduccion()
 
     elif opcion == 7:
-        controlador_insumo.Listar_Insumo()
+        controlador_insumo.ListarInsumo()
 
     elif opcion == 8:
             break

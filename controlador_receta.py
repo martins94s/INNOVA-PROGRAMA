@@ -16,31 +16,19 @@ def BorrarReceta(): #funciona
     condicion = (input("el numro de receta a eliminar: "))
     com.DeleteReceta(condicion)
 
-def Insertar_Receta(): #funciona
-    com = Modelo.Conectar()
-    iD_receta = int(input("Ingrese el ID de la receta: "))
-    nombre_receta = str(input("Ingrese nombre de la receta: "))
-    descrip_receta = str(input("Ingrese detalle de la receta: "))
-    cantidad_por_receta = int(input("Ingrese cantidad producida por la receta: "))
-    unidad_rec = str(input("Ingrese la unidad de  cantidad de la receta: "))
+def InsertarReceta():
+    con = Modelo.Conectar()
 
-    receta = Modelo.Receta(iD_receta,nombre_receta,descrip_receta,cantidad_por_receta,unidad_rec)
+    id_receta=("\nInggrese el id de la Receta: ")
+    nombre_receta =input("\nIngrese el nombre de la Receta: ")
+    descrip_receta =input("\nIngrese la discripcion de la Receta: ")
+    cantidad_por_receta =input("\nIngrese la cantidad por Receta: ")
+    unidad_rec =input("\nIngrese la unidad de Receta: ")
+    
+    nuevaReceta= Modelo.Receta(id_receta,nombre_receta,descrip_receta,cantidad_por_receta,unidad_rec)
 
-    com.InsertarReceta(receta)
-
-def Actualizar_Receta(): #funciona
-    Con = Modelo.Conectar()
-    Con.UpdateReceta()
-
+    con.InsertarProducto(nuevaReceta)
+    input("Para continuar presione enter")
     
 
 
-    
-
-#ListarReceta() -  funciona
-
-#BorrarReceta() - funciona
-
-#Insertar_Receta() - funciona
-
-#Actualizar_Receta() - funciona

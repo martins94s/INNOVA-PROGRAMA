@@ -1,7 +1,7 @@
 import Modelo
 
 
-def Listar_Insumo(): #funciona
+def ListarInsumo(): #funciona
     com = Modelo.Conectar()
 
     listado = com.ListarInsumo()
@@ -25,7 +25,7 @@ def Insertar_Insumo(): #funciona
     cantidad = int(input("ingrese cantidad del insumo: "))
     insumo_unidad = str(input("ingrese unidad del insumo: "))
 
-    insumo = Modelo.Insumo(iD_insumo,nombre,cantidad,insumo_unidad)
+    insumo = Modelo.Insumo(0,nombre,cantidad,insumo_unidad)
 
     com.InsertarInsumo(insumo)
 
