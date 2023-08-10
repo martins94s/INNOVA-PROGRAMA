@@ -1,17 +1,17 @@
-# este metodo es para ir a la base de datos a uscar los datos
 import mysql.connector
 from mysql.connector import Error
 
+
 class Conectar():
 
-    def __init__(self) -> None:
+    def __init__(self):
         try:
             self.conexion = mysql.connector.connect(
                 host = 'localhost',
-                port = "3306", # 3306
-                user = "root", # root
-                password = "",# " " - vacio + enter
-                db= "big_bread"
+                port = '3308', 
+                user = 'root', 
+                password ='', 
+                db= 'big_bread'
             )
             if self.conexion.is_connected():
                 print("")
@@ -21,45 +21,40 @@ class Conectar():
         except:
             print("NO SE PUDO CONETAR A LA BASE DE DATOS")
 
-   
-    # *********************************************** PRODUCTOS ********************************************
-    def InsertarProducto(self,producto): # FUNCIONA - INSERTAR UN PRODUCTO EN UNA TABLA EN UNA BASE DE DATOS EN MYSQL - 9
-        
-        if self.conexion.is_connected(): 
-            try:   
-                mi_cursor = self.conexion.cursor()
-                #query = "INSERT INTO productos (iD_Producto,nombre_Producto,stock,precio,unidad_de_medida,iD_Receta) VALUES "
-                #query = str(input("Ingrese la sentencia en mayuscula:"))
-                query = "INSERT INTO producto(iD_Producto,nombre_Producto,stock,precio,unidad_de_medida,iD_Receta) VALUES (%s, %s, %s, %s, %s, %s)"
-                data = (producto.getiD_Producto(),
-                        producto.getnombre_Producto(),
+#******************************************PRODCUTO**************************************************
+    def ListarProducto(self):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                senteciaSQL = "SELECT * FROM Producto"
+                cursor.execute(senteciaSQL)
+                resultados = cursor.fetchall()
+                self.conexion.close()
+                return resultados
+            
+            except mysql.connector.Error as descripcionError:
+                print("¡No se conectó!",descripcionError)
+    
+    def InsertarProducto(self,producto):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                sentenciaSQL = "INSERT into Producto values(null,%s,%s,%s,%s,null)"
+
+                data = (producto.getnombre_Producto(),
                         producto.getstock(),
                         producto.getprecio(),
-                        producto.getunidad_de_medida(),
-                        producto.getiD_Receta()
+                        producto.getunidad_de_medida()
                         )
-                mi_cursor.execute(query,data)
-                self.conexion.commit()
-                print("Producto insertado correctamente")
-                mi_cursor.close()
-                self.conexion.close()
-            except Error as e:
-                print("Se produjo un Error: ",e)  
 
-    def ListarProductos(self): # FUNCIONA - SELECCIONAR UN PRODUCTO EN UNA TABLA EN UNA BASE DE DATOS EN MYSQL - 10
-        try:
-            if self.conexion.is_connected():
-                mi_cursor = self.conexion.cursor()
-                print("Informacion de los  productos")
-                #query = str(input("Ingrese la sentencia en mayuscula:")) #SELECT * FROM Productos
-                query = "SELECT * FROM producto"
-                mi_cursor.execute(query)
-                resultados= mi_cursor.fetchall()
-                mi_cursor.close()
-                return resultados
+                cursor.execute(sentenciaSQL,data)
+
+                self.conexion.commit()
                 self.conexion.close()
-        except Error as e:
-            print("Se produjo un Error: ",e)   
+                print("Producto insertado correctamente")
+
+            except mysql.connector.Error as descripcionError:
+                print("¡No se conectó!",descripcionError)
 
     def UpdateProducto(self): #FUNCIONA
         if self.conexion.is_connected():
@@ -88,22 +83,21 @@ class Conectar():
             except Error as e:
                 print("Se produjo un Error: ",e)
 
-    # *********************************************** RECETAS ***********************************************
-
-    def ListarReceta(self): # FUNCIONA - LISTAR LAS FRECETAS - 
-        try:
-            if self.conexion.is_connected():
-                mi_cursor = self.conexion.cursor()
-                query = "SELECT * FROM receta"
-                mi_cursor.execute(query)
-                resultados= mi_cursor.fetchall()
-                mi_cursor.close()
-                return resultados
+#************************************************RECETA******************************************************
+def ListarReceta(self):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                senteciaSQL = "SELECT * FROM Receta"
+                cursor.execute(senteciaSQL)
+                resultados = cursor.fetchall()
                 self.conexion.close()
-        except Error as e:
-            print("Se produjo un Error: ",e)  
+                return resultados
+            
+            except mysql.connector.Error as descripcionError:
+                print("¡No se conectó!",descripcionError)
 
-    def DeleteReceta(self,condicion): # FUNCIONA - BORRAR UN RECETA - Funciona
+def DeleteReceta(self,condicion): # FUNCIONA - BORRAR UN RECETA - Funciona
         if self.conexion.is_connected():
             try:
                 mi_cursor = self.conexion.cursor()
@@ -116,27 +110,33 @@ class Conectar():
             except Error as e:
                 print("Se produjo un Error: ",e)   
 
-    def InsertarReceta(self,receta): # FUNCIONA - INSERTAR UN receta EN UNA TABLA EN UNA BASE DE DATOS EN MYSQL - 9
-        
-        if self.conexion.is_connected(): 
-            try:   
+def InsertarReceta(self,receta):
+        if self.conexion.is_connected():
+            try:
                 mi_cursor = self.conexion.cursor()
-                query = "INSERT INTO receta (iD_receta,nombre_receta,descrip_receta,cantidad_por_receta,unidad_rec) VALUES (%s, %s, %s, %s, %s)"
-                data = (receta.getiD_receta(),
+                sentenciaSQL = "INSERT into receta values(null,%s,%s,%s,%s)"
+
+                data = (
+
+                        receta.getid_receta(),
                         receta.getnombre_receta(),
                         receta.getdescrip_receta(),
-                        receta.getcantidad_por_receta(),
+                        receta.cantidad_por_rec(),
                         receta.getunidad_rec()
+                        
                         )
-                mi_cursor.execute(query,data)
-                self.conexion.commit()
-                print("Insumo insertado correctamente")
-                mi_cursor.close()
-                self.conexion.close()
-            except Error as e:
-                print("Se produjo un Error: ",e)  
 
-    def UpdateReceta(self): 
+                mi_cursor.execute(sentenciaSQL,data)
+
+                self.conexion.commit()
+                self.conexion.close()
+                print("Receta insertado correctamente")
+
+            except mysql.connector.Error as descripcionError:
+                print("¡No se conectó!",descripcionError)
+        
+
+def UpdateReceta(self): 
 
         if self.conexion.is_connected():
             try:
@@ -152,21 +152,22 @@ class Conectar():
                 print("NO SE PUDO CONETAR A LA BASE DE DATOS")
 
 
-    # ********************************************** INSUMOS **************************************************
-    def ListarInsumo(self):  # FUNCIONA- LISTAR INSUMOS - 
+#************************************************INSUMO******************************************************
+def ListarInsumo(self):
         if self.conexion.is_connected():
             try:
-                mi_cursor = self.conexion.cursor()
-                query = "SELECT * FROM insumo"
-                mi_cursor.execute(query)
-                resultados= mi_cursor.fetchall()
-                mi_cursor.close()
-                return resultados
+                cursor = self.conexion.cursor()
+                senteciaSQL = "SELECT * FROM Insumo"
+                cursor.execute(senteciaSQL)
+                resultados = cursor.fetchall()
                 self.conexion.close()
-            except Error as e:
-                print("Se produjo un Error: ",e)  
+                return resultados
+            
+            except mysql.connector.Error as descripcionError:
+                print("¡No se conectó!",descripcionError)
 
-    def DeleteInsumo(self,condicion): # FUNCIONA - BORRAR UN RECETA - Funciona
+
+def DeleteInsumo(self,condicion): # FUNCIONA - BORRAR UN RECETA - Funciona
         if self.conexion.is_connected():
             try:
                 mi_cursor = self.conexion.cursor()
@@ -179,26 +180,28 @@ class Conectar():
             except Error as e:
                 print("Se produjo un Error: ",e) 
 
-    def InsertarInsumo(self,insumo): # FUNCIONA - INSERTAR UN insumo EN UNA TABLA EN UNA BASE DE DATOS EN MYSQL - 9
-        
-        if self.conexion.is_connected(): 
-            try:   
-                mi_cursor = self.conexion.cursor()
-                query = "INSERT INTO insumo (iD_insumo,nombre,cantidad,insumo_unidad) VALUES (%s, %s, %s, %s)"
-                data = (insumo.getiD_insumo(),
-                        insumo.getnombre(),
-                        insumo.getcantidad(),
-                        insumo.getinsumo_unidad(),
-                        )
-                mi_cursor.execute(query,data)
-                self.conexion.commit()
-                print("Insumo insertado correctamente")
-                mi_cursor.close()
-                self.conexion.close()
-            except Error as e:
-                print("Se produjo un Error: ",e)  
+def InsertarInsumo(self,insumo): # FUNCIONA - INSERTAR UN PRODUCTO EN UNA TABLA EN UNA BASE DE DATOS EN MYSQL - 9
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                sentenciaSQL = "INSERT into insumo values(null,%s,%s,%s)"
 
-    def UpdateInsumo(self): # FUNCIONA
+                data = (insumo.getnombre_Producto(),
+                        insumo.getstock(),
+                        insumo.getprecio(),
+                        insumo.getunidad_de_medida()
+                        )
+
+                cursor.execute(sentenciaSQL,data)
+
+                self.conexion.commit()
+                self.conexion.close()
+                print("insumo insertado correctamente")
+
+            except mysql.connector.Error as descripcionError:
+                print("¡No se conectó!",descripcionError)
+
+def UpdateInsumo(self): # FUNCIONA
         if self.conexion.is_connected():
             try:
                 mi_cursor = self.conexion.cursor()
@@ -214,34 +217,32 @@ class Conectar():
 
 
 # *********************************************** PRODUCCION ************************************************
-    def ListarProduccion(self):  #FUNCIONA - LISTAR PRODUCCION - 
+def ListarProduccion(self):
         if self.conexion.is_connected():
             try:
-                mi_cursor = self.conexion.cursor()
-                print("Informacion de la  produccion")
-                query = "SELECT * FROM produccion"
-                mi_cursor.execute(query)
-                resultados= mi_cursor.fetchall()
-                mi_cursor.close()
-                return resultados
+                cursor = self.conexion.cursor()
+                senteciaSQL = "SELECT * FROM Produccion"
+                cursor.execute(senteciaSQL)
+                resultados = cursor.fetchall()
                 self.conexion.close()
-            except Error as e:
-                print("Se produjo un Error: ",e) 
+                return resultados
+            
+            except mysql.connector.Error as descripcionError:
+                print("¡No se conectó!",descripcionError)
 
-    def DeleteProduccion(self,condicion): # FUNCIONA - BORRAR REGISTRO DE PRODUCCION 
+def DeletePoduccion(self): # FUNCIONA - BORRAR REGISTRO DE PRODUCCION 
         if self.conexion.is_connected():
             try:
                 mi_cursor = self.conexion.cursor()
-                query = "DELETE FROM produccion WHERE iD_produccion = "
-                cond = str(condicion)
-                mi_cursor.execute(query+cond)
+                sentenciaSQL = "DELETE FROM produccion WHERE iD_produccion = "
+                mi_cursor.execute(sentenciaSQL)
                 self.conexion.commit()
                 print("El registro de la produccion se ha eliminado")
                        
-            except Error as e:
-                print("Se produjo un Error: ",e) 
+            except mysql.connector.Error as descripcionError:
+                print("¡No se conectó!",descripcionError)
 
-    def UpdateProduccion(self): # FUNCIONA
+def UpdateProduccion(self): # FUNCIONA
         if self.conexion.is_connected():
             try:
                 mi_cursor = self.conexion.cursor()
@@ -255,26 +256,29 @@ class Conectar():
             except:
                 print("NO SE PUDO CONETAR A LA BASE DE DATOS")
 
-    def InsertarProduccion(self,produccion): # FUNCIONA - INSERTAR UN PRODUCTO EN UNA TABLA EN UNA BASE DE DATOS EN MYSQL - 9
-        
-        if self.conexion.is_connected(): 
-            try:   
-                mi_cursor = self.conexion.cursor()
-                query = "INSERT INTO produccion(iD_produccion,fecha,num_pedido,prod_pedido,cantidad_pedida,unidad) VALUES (%s, %s, %s, %s, %s, %s)"
-                data = (produccion.getiD_produccion(),
-                        produccion.getfecha(),
-                        produccion.getnum_pedido(),
-                        produccion.getprod_pedido(),
-                        produccion.getcantidad_pedida(),
-                        produccion.getunidad()
+def InsertarProduccion(self,produccion): # FUNCIONA - INSERTAR UN PRODUCTO EN UNA TABLA EN UNA BASE DE DATOS EN MYSQL - 9
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                sentenciaSQL = "INSERT into producccion values(null,%s,%s,%s,%s,%s)"
+
+                data = (produccion.getnombre_Producto(),
+                        produccion.getstock(),
+                        produccion.getprecio(),
+                        produccion.getunidad_de_medida()
                         )
-                mi_cursor.execute(query,data)
+
+                cursor.execute(sentenciaSQL,data)
+
                 self.conexion.commit()
-                print("Produccion insertada correctamente")
-                mi_cursor.close()
                 self.conexion.close()
-            except Error as e:
-                print("Se produjo un Error: ",e) 
+                print("Produccion insertado correctamente")
+
+            except mysql.connector.Error as descripcionError:
+                print("¡No se conectó!",descripcionError)
+
+
+
 
 # ********************************************** CLASE PRODUCTO *********************************************
 class Producto(): # FUNCIONA
@@ -429,90 +433,8 @@ class Produccion(): #
     def setcantidad_pedida(self,cantidad_pedida):
         self.Cantidad_Pedida = cantidad_pedida
     def setunidad(self,unidad):
-        self.Unidad = unidad  
+        self.Unidad = unidad 
 
-
-# ************************************* sector pruebas **********************************
-
-
-""" esto funciona, no tirar ***** aqui se inserto un producto
-iD_Producto = int(input("ingrese el ID del producto: "))
-nombre_Producto = str(input("ingrese nombre propducto: "))
-stock = int(input("ingrese stock: "))
-precio = int(input("ingrese el precio: "))
-unidad_de_medida = str(input("Ingrese la unidad de medida: "))
-iD_Receta = int(input("ingrese la receta: "))
-
-producto = Producto(iD_Producto, nombre_Producto, stock, precio, unidad_de_medida, iD_Receta)
-
-
-Con = Conectar()
-Con.InsertarProducto(producto)
-
-"""
-"""
-#esto funciona, no tirar ***** aqui se inserto un insumo
-iD_insumo = int(input("ingrese el ID del insumo: "))
-nombre = str(input("ingrese nombre del insumo: "))
-cantidad = int(input("ingrese cantidad del insumo: "))
-insumo_unidad = str(input("ingrese unidad del insumo: "))
-
-
-insumo = Insumo(iD_insumo, nombre, cantidad, insumo_unidad)
-
-
-Con = Conectar()
-Con.InsertarInsumo(insumo)
-"""
-"""
-#esto funciona, no tirar ***** aqui se inserto una receta
-iD_receta = int(input("Ingrese el ID de la receta: "))
-nombre_receta = str(input("Ingrese nombre de la receta: "))
-descrip_receta = str(input("Ingrese detalle de la receta: "))
-cantidad_por_receta = int(input("Ingrese cantidad producida por la receta: "))
-unidad_rec = str(input("Ingrese la unidad de  cantidad de la receta: "))
-
-
-receta = Receta(iD_receta,nombre_receta,descrip_receta,cantidad_por_receta,unidad_rec)
-
-
-Con = Conectar()
-Con.InsertarReceta(receta)
-"""
-#condicion_1 = input("inserte el parametro : ")
-#D_Producto = int(input("Indique el item ID: "))
-"" 
-
-#Con = Conectar()
-#Con.UpdateProducto()
-
-#Con = Conectar()
-#Con.UpdateInsumo()
-
-#Con = Conectar()
-#Con.UpdateReceta()
-
-#com = Conectar()
-#condicion = input("ingrese la condicion:")
-#com.DeleteProduccion(condicion)
-
-#com = Conectar()
-#com.ListarProduccion()
-
-"""
-iD_produccion = input("Ingrese el ID de la produccion: ")
-fecha = str(input("Ingrese fecha del pedido: "))
-num_pedido = int(input("Ingrese numero del pedido: "))
-prod_pedido = str(input("Ingrese el producto pedido: "))
-cantidad_pedida = int(input("Ingrese la cantidad pedida: "))
-unidad = str(input("Ingrese unidad del producto: "))
-
-produccion = Produccion(iD_produccion,fecha,num_pedido,prod_pedido,cantidad_pedida,unidad)
-
-Con = Conectar()
-Con.InsertarProduccion(produccion)
-
-"""
 
 
 
